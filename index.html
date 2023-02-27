@@ -22,12 +22,129 @@
 
     </div>
 
+    <div id="transction-area">
+        
+        <div class="row">
+            <div class="col-md-4">
+                <div class="deposit status">
+                    <h5>Total Deposit</h5>
+                    <h2>$ <span id="currentDeposit">00</span></h2>
+                </div>
+                
+            </div>
+            <div class="col-md-4">
+                <div class="withdraw status">
+                    <h5>Total Withdraw</h5>
+                    <h2>$ <span id="currentWithdraw">00</span></h2>
+
+                </div>
+                
+            </div>
+            <div class="col-md-4">
+                <div class="balance status">
+                    <h5>Available Balance</h5>
+                    <h2>$ <span id="totalBalance">1200</span></h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <col-md-6>
+               <div class="submit-area">
+                    <h4>Deposit</h4>
+                    <input id="depositAmount" type="text" class="form-control" placeholder="$ Amount to deposit">
+                    <br>
+                    <button id="depositAdd" class="btn btn-success">Deposit</button>
+               </div>
+            </col-md-6>
+            <col-md-6>
+                <div class="submit-area">
+                    <h4>Withdraw</h4>
+                    <input id="withdrawAmount" type="text" class="form-control" placeholder="$ Amaount to withdraw">
+                    <br>
+                    <button id="withdraw" class="btn btn-success">Withdraw</button>
+                </div>
+            </col-md-6>
+        </div>
+
+
+    </div>
+
     <script>
+        //Login Button event handler
         const loginbtn=document.getElementById("login");
-        loginbtn.addEventListener('click',function(){
+        loginbtn.addEventListener("click",function(){
             const loginArea=document.getElementById("login-area");
             loginArea.style.display= "none";
+
+            const transctionArea=document.getElementById("transction-area");
+            transctionArea.style.display="block";
         })
+
+        //Deposit Button event handler
+
+        const depositbtn=document.getElementById("depositAdd");
+        depositbtn.addEventListener("click",function(){
+            //get depositAmount id
+            const depositAmount=document.getElementById("depositAmount").value;
+            const depositNumber=parseFloat(depositAmount); //convert to float
+            
+            //get previous deposit amount
+            const currentDeposit =document.getElementById("currentDeposit").innerText;
+            const currentDepositNumber=parseFloat(currentDeposit);
+
+            //calculate Total Balance
+            const totalBalance=document.getElementById("totalBalance").innerText;
+            const newTotalbalance=parseFloat(totalBalance);
+            
+
+            const totalDeposit=depositNumber + currentDepositNumber;
+            //calculate final balance
+            const finalBalance=depositNumber+newTotalbalance;
+
+            //print current total Deposit
+            document.getElementById("currentDeposit").innerText=totalDeposit;
+            //print current total Balance
+            document.getElementById("totalBalance").innerText=finalBalance;
+
+            document.getElementById("depositAmount").value="";
+            
+
+
+
+
+
+
+        })
+
+        //withdraw button event handler
+
+        const withdraw=document.getElementById("withdraw");
+        withdraw.addEventListener("click",function(){
+            const withdrawAmount=document.getElementById("withdrawAmount").value;
+            const newWithdrawAmount=parseFloat(withdrawAmount);
+
+            const currentWithdraw=document.getElementById("currentWithdraw").innerText;
+            const newCurrentWithdraw=parseFloat(currentWithdraw);
+
+            const totalWithdraw=newWithdrawAmount+newCurrentWithdraw;
+            document.getElementById("currentWithdraw").innerText=totalWithdraw;
+            
+            const newFinalBal=document.getElementById("totalBalance").innerText;
+            const finalBalance=parseFloat(newFinalBal);
+            const newFinalBalance=finalBalance-newWithdrawAmount;
+            document.getElementById("totalBalance").innerText=newFinalBalance;
+            document.getElementById("withdrawAmount").value="";
+
+
+
+
+        })
+
+
+
+
+
     </script>
 </body>
 </html>

@@ -43,7 +43,7 @@
             <div class="col-md-4">
                 <div class="balance status">
                     <h5>Available Balance</h5>
-                    <h2>$ <span id="totalBalance">1200</span></h2>
+                    <h2>$ <span id="currentBalance">1200</span></h2>
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
                     <h4>Deposit</h4>
                     <input id="depositAmount" type="text" class="form-control" placeholder="$ Amount to deposit">
                     <br>
-                    <button id="depositAdd" class="btn btn-success">Deposit</button>
+                    <button id="addDeposit" class="btn btn-success">Deposit</button>
                </div>
             </col-md-6>
             <col-md-6>
@@ -83,31 +83,43 @@
 
         //Deposit Button event handler
 
-        const depositbtn=document.getElementById("depositAdd");
+        const depositbtn=document.getElementById("addDeposit");
         depositbtn.addEventListener("click",function(){
-            //get depositAmount id
-            const depositAmount=document.getElementById("depositAmount").value;
-            const depositNumber=parseFloat(depositAmount); //convert to float
+                //get depositAmount id
+                const depositAmount=document.getElementById("depositAmount").value;
+                const depositNumber = parseFloat(depositAmount); //convert to float
+
+                //get previous deposit amount...this section below now is done by function
+                // const currentDeposit = document.getElementById("currentDeposit").innerText;
+                // const currentDepositNumber = parseFloat(currentDeposit);
+                // const totalDeposit = depositNumber + currentDepositNumber;
+                // document.getElementById("currentDeposit").innerText =totalDeposit;
+                
+                updateSpanText("currentDeposit", depositNumber)
+                updateSpanText("currentBalance", depositNumber)
+
+                document.getElementById("depositAmount").value="";
+            })
+            function updateSpanText(id, depositNumber){
+
+                const currentBalance = document.getElementById(id).innerText;
+                const currentBalanceNumber=parseFloat(currentBalance);
+                const totalBalance=depositNumber+currentBalanceNumber;
+                document.getElementById(id).innerText=totalBalance;
+               
+            }
+
+
+
             
-            //get previous deposit amount
-            const currentDeposit =document.getElementById("currentDeposit").innerText;
-            const currentDepositNumber=parseFloat(currentDeposit);
+         
 
-            //calculate Total Balance
-            const totalBalance=document.getElementById("totalBalance").innerText;
-            const newTotalbalance=parseFloat(totalBalance);
             
 
-            const totalDeposit=depositNumber + currentDepositNumber;
-            //calculate final balance
-            const finalBalance=depositNumber+newTotalbalance;
+            
+        
 
-            //print current total Deposit
-            document.getElementById("currentDeposit").innerText=totalDeposit;
-            //print current total Balance
-            document.getElementById("totalBalance").innerText=finalBalance;
-
-            document.getElementById("depositAmount").value="";
+           
             
 
 
@@ -115,9 +127,10 @@
 
 
 
-        })
+       
 
         //withdraw button event handler
+        //it is also posible to do with function
 
         const withdraw=document.getElementById("withdraw");
         withdraw.addEventListener("click",function(){
@@ -130,11 +143,11 @@
             const totalWithdraw=newWithdrawAmount+newCurrentWithdraw;
             document.getElementById("currentWithdraw").innerText=totalWithdraw;
             
-            const newFinalBal=document.getElementById("totalBalance").innerText;
+            const newFinalBal=document.getElementById("currentBalance").innerText;
             const finalBalance=parseFloat(newFinalBal);
             const newFinalBalance=finalBalance-newWithdrawAmount;
-            document.getElementById("totalBalance").innerText=newFinalBalance;
-            document.getElementById("withdrawAmount").value="";
+            document.getElementById("currentBalance").innerText=newFinalBalance;
+            document.getElementById("withdrawAmount").value= "";
 
 
 
